@@ -1,0 +1,36 @@
+#Query 1.-
+select count(film_category.film_id) number_films, category.name from sakila.film_category
+join sakila.category
+on film_category.category_id = category.category_id
+group by name
+order by name;
+
+#Query 2.-
+select concat(staff.first_name, ' ', staff.last_name) as full_name, address.address
+from sakila.staff
+join sakila.address
+using(address_id);
+
+#Query 3.-
+select staff.first_name, staff.last_name, sum(amount) as total_amount
+from sakila.staff
+join sakila.payment
+using(staff_id)
+where date_format(payment.payment_date, '%Y') = 2005
+and date_format(payment.payment_date, '%M') = 'August'
+group by first_name, last_name;
+
+#Query 4.-
+select film.title, count(film_actor.actor_id)
+from sakila.film_actor
+join sakila.film
+using(film_id)
+group by film.title;
+
+#Query 5.-
+select payment.customer_id, concat(customer.first_name, customer.last_name) as full_name, sum(amount) as total_amount
+from sakila.payment
+join sakila.customer
+using(customer_id)
+group by payment.customer_id
+order by last_name;
